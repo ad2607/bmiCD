@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
@@ -48,28 +49,24 @@ namespace BMICalculatorSeleniumTests
             var startTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             var endTimestamp = startTimestamp + 60 * 10;
 
-            while (true)
-            {
-                try
-                {
-                    driver.Navigate().GoToUrl(webAppUrl);
-                    // Assert.AreEqual("Home Page - ASP.NET Core", driver.Title, "Expected title to be 'Home Page - ASP.NET Core'");
-                    Assert.AreEqual("Edit Here", "Edit Here");
+            //Arragne
+            string inputValueStones = "13";
+            string inputValuePounds = "4";
+            string inputValueFeet = "6";
+            string inputValueInches = "3";
+            string expectedResult = "Your BMI is 23.25";
+            //Acts
+            driver.Navigate().GoToUrl("webAppUrl");
+            driver.Manage().Window.Size = new System.Drawing.Size(974, 1040);
+            driver.FindElement(By.Id("BMI_WeightStones")).SendKeys("13");
+            driver.FindElement(By.Id("BMI_WeightPounds")).SendKeys("4");
+            driver.FindElement(By.Id("BMI_HeightFeet")).SendKeys("6");
+            driver.FindElement(By.Id("BMI_HeightInches")).SendKeys("3");
+            driver.FindElement(By.CssSelector(".btn")).Click();
+            string actualValue = driver.FindElement(By.Id("BMIValue")).Text;
 
-                    break;
-                }
-                catch(Exception e)
-                {
-                    var currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                               
-                    if (currentTimestamp > endTimestamp)
-                    {
-                        Console.Write("##vso[task.logissue type=error;]Test SampleFunctionalTest1 failed with error: " + e.ToString());
-                        throw;
-                    }
-                    Thread.Sleep(5000);
-                }
-            }
+            //Assert
+            Assert.AreEqual(expectedResult, actualValue);
         }
 
         private RemoteWebDriver GetChromeDriver()

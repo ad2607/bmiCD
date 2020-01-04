@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Application",
+    "\\Application\\BMICalculator",
+    "\\Application\\BMICalculatorSeleniumTests",
+    "\\ArmTemplates"
+  ],
+  "SelectedNode": "\\Application\\BMICalculator\\BMICalculator.csproj",
+  "PreviewInSolutionExplorer": false
+}
